@@ -4,7 +4,7 @@ import { Map as iMap } from 'immutable';
 import { Point, Side, Role } from '../../types';
 import { range } from '../../utils/helper';
 
-import MazeCeil from './maze_cell';
+import MazeCell from './maze_cell';
 
 type CharactersPosition = iMap<Role, Point>;
 
@@ -23,7 +23,7 @@ export interface MazeProps {
 	blueprint: Blueprint;
 }
 
-const renderCeils = (
+const renderCells = (
 	width: number,
 	height: number,
 	charactersPosition: CharactersPosition,
@@ -32,7 +32,7 @@ const renderCeils = (
 	return range(width).map(i => (
 		<Row>
 			{range(height).map(j => (
-				<MazeCeil sides={blueprint[i][j].sides} role={getRole(charactersPosition, i, j)} />
+				<MazeCell key={blueprint[i][j].sides} role={getRole(charactersPosition, i, j)} />
 			))}
 		</Row>
 	));
@@ -43,7 +43,7 @@ function Row({ children }: { children: JSX.Element[] }) {
 }
 
 export default function Maze({ width, height, charactersPosition, blueprint }: MazeProps) {
-	return <div>{renderCeils(width, height, charactersPosition, blueprint)}</div>;
+	return <div>{renderCells(width, height, charactersPosition, blueprint)}</div>;
 }
 
 const getRole = (charactersPosition: CharactersPosition, i: number, j: number): Role => {
