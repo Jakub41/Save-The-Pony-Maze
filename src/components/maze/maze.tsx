@@ -1,27 +1,11 @@
 import * as React from 'react';
-import { Map as iMap } from 'immutable';
 
-import { Point, Side, Role } from '../../types';
+import { Role, CharactersPosition, MazeProps, Blueprint } from '../../types';
 import { range } from '../../utils/helper';
 
-import MazeCell from './maze_cell';
+import MazeCeil from './maze_cell';
 
-type CharactersPosition = iMap<Role, Point>;
-
-interface Blueprint {
-	[index: number]: {
-		[index: number]: {
-			sides: Side[];
-		};
-	};
-}
-
-export interface MazeProps {
-	width: number;
-	height: number;
-	charactersPosition: CharactersPosition;
-	blueprint: Blueprint;
-}
+import './maze.css';
 
 const renderCells = (
 	width: number,
@@ -32,14 +16,14 @@ const renderCells = (
 	return range(width).map(i => (
 		<Row>
 			{range(height).map(j => (
-				<MazeCell key={blueprint[i][j].sides} role={getRole(charactersPosition, i, j)} />
+				<MazeCeil key={j} sides={blueprint[i][j].sides} role={getRole(charactersPosition, i, j)} />
 			))}
 		</Row>
 	));
 };
 
 function Row({ children }: { children: JSX.Element[] }) {
-	return <div>{children}</div>;
+	return <div className="row">{children}</div>;
 }
 
 export default function Maze({ width, height, charactersPosition, blueprint }: MazeProps) {
