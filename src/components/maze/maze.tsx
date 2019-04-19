@@ -1,11 +1,15 @@
 import * as React from 'react';
 
-import { Role, CharactersPosition, MazeProps, Blueprint } from '../../types';
+import { Role, CharactersPosition, GameState, Blueprint } from '../../types';
 import { range } from '../../utils/helper';
 
-import MazeCeil from './maze_cell';
+import MazeCell from './maze_Cell';
 
 import './maze.css';
+
+interface Props {
+	gameState: GameState;
+}
 
 const renderCells = (
 	width: number,
@@ -16,7 +20,11 @@ const renderCells = (
 	return range(width).map(i => (
 		<Row>
 			{range(height).map(j => (
-				<MazeCeil key={j} sides={blueprint[i][j].sides} role={getRole(charactersPosition, i, j)} />
+				<MazeCell
+					key={j}
+					sides={blueprint.getIn([i, j, 'sides'])}
+					role={getRole(charactersPosition, i, j)}
+				/>
 			))}
 		</Row>
 	));
@@ -26,7 +34,9 @@ function Row({ children }: { children: JSX.Element[] }) {
 	return <div className="row">{children}</div>;
 }
 
-export default function Maze({ width, height, charactersPosition, blueprint }: MazeProps) {
+export default function Maze({
+	gameState: { width, height, charactersPosition, blueprint }
+}: Props) {
 	return <div>{renderCells(width, height, charactersPosition, blueprint)}</div>;
 }
 

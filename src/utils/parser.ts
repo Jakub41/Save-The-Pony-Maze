@@ -10,7 +10,7 @@ import {
 	Point
 } from '../types';
 
-import { range } from '../utils/helper';
+import { range } from './helper';
 import { Map as iMap } from 'immutable';
 
 const directionToSide = (direction: Direction): Side => {
