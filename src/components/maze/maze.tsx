@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Role, CharactersPosition, GameState, Blueprint } from '../../types';
 import { range } from '../../utils/helper';
 
-import MazeCell from './maze_Cell';
+import MazeCell from './maze_cell';
 
 import './maze.css';
 

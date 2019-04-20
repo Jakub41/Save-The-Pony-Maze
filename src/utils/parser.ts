@@ -1,6 +1,6 @@
 import {
-	MazeProps,
 	GameState,
+	APIState,
 	Blueprint,
 	CharactersPosition,
 	Direction,
@@ -9,6 +9,7 @@ import {
 	Role,
 	Point
 } from '../types';
+import { fromJS } from 'immutable';
 
 import { range } from './helper';
 import { Map as iMap } from 'immutable';
@@ -30,26 +31,32 @@ const directionToSide = (direction: Direction): Side => {
 	}
 };
 
-const parseBlueprint = (data: string[][], [width, height]: [number, number]): Blueprint =>
-	range(height).map(i =>
-		data.slice(i * width, i * width + width).map(directions => ({
-			sides: directions
-				.map(direction => directionToSide(Direction[direction.toUpperCase()]))
-				.reduce((acc, cur) => (acc |= cur), 0)
-		}))
+export const parseBlueprint = ({ data, size: [width, height] }: APIState): Blueprint =>
+	fromJS(
+		range(height).map(i =>
+			data.slice(i * width, i * width + width).map((directions, j) => ({
+				sides: directions
+					.map(direction => directionToSide(Direction[direction.toUpperCase()]))
+					.reduce(
+						(acc, cur) => (acc |= cur),
+						(+(i === height - 1) * Side.BOTTOM) | (+(j === width - 1) * Side.RIGHT)
+					)
+			}))
+		)
 	);
 
-const parsePosition = (pos: Position, width: number): Point => ({
-	x: pos[0] % width,
-	y: Math.floor(pos[0] / width)
-});
+const parsePosition = (pos: Position, width: number): Point =>
+	new Point({
+		x: pos[0] % width,
+		y: Math.floor(pos[0] / width)
+	});
 
-const parseCharactersPosition = (
-	[width, height]: [number, number],
-	pony: Position,
-	domokun: Position,
-	exit: Position
-): CharactersPosition =>
+export const parseCharactersPosition = ({
+	size: [width, _],
+	pony,
+	domokun,
+	['end-point']: exit
+}: APIState): CharactersPosition =>
 	iMap<Role, Point>().withMutations(map =>
 		map
 			.set(Role.PONY, parsePosition(pony, width))
@@ -57,14 +64,11 @@ const parseCharactersPosition = (
 			.set(Role.EXIT, parsePosition(exit, width))
 	);
 
-export const parseGameState = (state: GameState): MazeProps => ({
-	width: state.size[0],
-	height: state.size[1],
-	charactersPosition: parseCharactersPosition(
-		state.size,
-		state.pony,
-		state.domokun,
-		state['end-point']
-	),
-	blueprint: parseBlueprint(state.data, state.size)
-});
+export const parseGameState = (state: APIState): GameState =>
+	new GameState({
+		mazeId: state.maze_id,
+		width: state.size[0],
+		height: state.size[1],
+		charactersPosition: parseCharactersPosition(state),
+		blueprint: parseBlueprint(state)
+	});
