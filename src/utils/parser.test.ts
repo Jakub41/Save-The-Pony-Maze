@@ -1,7 +1,7 @@
-import { GameState } from '../types';
+import { APIState } from '../types/index';
 import { parseGameState } from './parser';
 
-const stateMock: GameState = {
+const stateMock: APIState = {
 	pony: [3],
 	domokun: [7],
 	'end-point': [8],
@@ -25,7 +25,7 @@ const stateMock: GameState = {
 	}
 };
 
-describe('test game state parser', () => {
+describe('game state parser', () => {
 	it('should match snapshot', () => {
 		expect(parseGameState(stateMock)).toMatchSnapshot();
 	});
