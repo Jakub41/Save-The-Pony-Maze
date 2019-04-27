@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { Role, CharactersPosition, GameState, Blueprint, PonyName } from '../../types/index';
+import { Role, CharactersPosition, GameState, Blueprint, PonyName, RainbowPath } from '../../types/index';
 import { range } from '../../utils/helper';
+import { getRole, getBorderConnections } from './maze_helper';
 
 import MazeCell from './maze_cell';
 
@@ -10,6 +11,7 @@ import './maze.css';
 interface Props {
 	ponyName: PonyName;
 	gameState: GameState;
+	rainbowPath: RainbowPath;
 }
 
 const renderCells = (
@@ -17,6 +19,7 @@ const renderCells = (
 	height: number,
 	ponyName: PonyName,
 	charactersPosition: CharactersPosition,
+	rainbowPath: RainbowPath,
 	blueprint: Blueprint
 ) => {
 	return range(height).map(i => (
@@ -25,8 +28,9 @@ const renderCells = (
 				<MazeCell
 					key={j}
 					sides={blueprint.getIn([i, j, 'sides'])}
-					role={getRole(charactersPosition, i, j)}
+					role={getRole(charactersPosition, rainbowPath, j, i)}
 					ponyName={ponyName}
+					borderConnections={getBorderConnections(blueprint, j, i, width, height)}
 				/>
 			))}
 		</Row>
@@ -38,12 +42,11 @@ function Row({ children }: { children: JSX.Element[] }) {
 }
 
 export default function Maze({
+	rainbowPath,
 	ponyName,
 	gameState: { width, height, charactersPosition, blueprint }
 }: Props) {
-	return <div>{renderCells(width, height, ponyName, charactersPosition, blueprint)}</div>;
+	return (
+		<div>{renderCells(width, height, ponyName, charactersPosition, rainbowPath, blueprint)}</div>
+	);
 }
-
-const getRole = (charactersPosition: CharactersPosition, i: number, j: number): Role => {
-	return charactersPosition.findKey(point => point.x == j && point.y == i) || Role.NONE;
-};
