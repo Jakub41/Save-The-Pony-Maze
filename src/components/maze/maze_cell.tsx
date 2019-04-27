@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import classNames from 'classnames';
 
-import { Role, Side, PonyName, BorderConnection } from '../../types/index';
+import { Role, Side, PonyName, BorderConnection, RainbowType } from '../../types/index';
 
 import CellRole from './cell_role';
 
@@ -14,6 +14,7 @@ interface Props {
 	role: Role;
 	ponyName: PonyName;
 	borderConnections: number;
+	rainbowType: RainbowType;
 }
 
 const renderBorders = (sides: number) => {
@@ -48,7 +49,7 @@ const renderBorderConnections = (borderConnections: number) => {
 
 export default function MazeCell({ sides, borderConnections, ponyName, role = Role.NONE }: Props) {
 	return (
-		<div className="Cell">
+		<div className="cell">
 			{renderBorders(sides)}
 			{renderBorderConnections(borderConnections)}
 			<CellRole ponyName={ponyName} role={role} />

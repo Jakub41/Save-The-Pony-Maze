@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { Role, CharactersPosition, GameState, Blueprint, PonyName, RainbowPath } from '../../types/index';
+import { CharactersPosition, GameState, Blueprint, PonyName, RainbowPath } from '../../types/index';
 import { range } from '../../utils/helper';
-import { getRole, getBorderConnections } from './maze_helper';
+import { getRole, getBorderConnections, getRainbowType } from './maze_helper';
 
 import MazeCell from './maze_cell';
 
@@ -28,9 +28,10 @@ const renderCells = (
 				<MazeCell
 					key={j}
 					sides={blueprint.getIn([i, j, 'sides'])}
-					role={getRole(charactersPosition, rainbowPath, j, i)}
+					role={getRole(charactersPosition, j, i)}
 					ponyName={ponyName}
 					borderConnections={getBorderConnections(blueprint, j, i, width, height)}
+					rainbowType={getRainbowType(rainbowPath, j, i)}
 				/>
 			))}
 		</Row>

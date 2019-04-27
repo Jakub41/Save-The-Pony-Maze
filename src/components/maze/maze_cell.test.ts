@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as enzyme from 'enzyme';
 
 import { range } from '../../utils/helper';
-import { Role, PonyName } from '../../types/index';
+import { Role, PonyName, RainbowType } from '../../types/index';
 import MazeCell from './maze_cell';
 
 describe('maze cell', () => {
@@ -18,7 +18,13 @@ describe('maze cell', () => {
 
 		range(15).forEach(i => {
 			const mazeCell = enzyme.shallow(
-				<MazeCell sides={i} role={Role.NONE} ponyName={PonyName.APPLEJACK} borderConnections={0} />
+				<MazeCell
+					sides={i}
+					role={Role.NONE}
+					ponyName={PonyName.APPLEJACK}
+					borderConnections={0}
+					rainbowType={RainbowType.NONE}
+				/>
 			);
 			const className = mazeCell.find('.cell').getElement().props.className;
 
