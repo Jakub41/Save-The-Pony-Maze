@@ -11,7 +11,7 @@ const Hello = React.memo(({  }: Props) => {
 	return (
 		<div className="hello-container">
 			<div className="hello-items">
-				<div>Hello, %username%!</div>
+				<div>Hello, pony saver!</div>
 				<div>
 					<Link className="link-style" to={Routes.NEW_GAME}>
 						<Button size="lg">Play</Button>
