@@ -119,6 +119,7 @@ export enum RainbowType {
 	WEST_TO_NORTH = 'WEST_TO_NORTH',
 	HORIZONTAL = 'HORIZONTAL',
 	VERTICAL = 'VERTICAL',
+	NONE = 'NONE'
 }
 export type RainbowPosition = { x: number; y: number; direction: Direction };
 export type RainbowPath = [] | [RainbowPosition] | [RainbowPosition, RainbowPosition];
@@ -128,4 +129,9 @@ export enum BorderConnection {
 	TOP_RIGHT = 2,
 	BOTTOM_LEFT = 4,
 	BOTTOM_RIGHT = 8
+}
+
+export enum GameStatus {
+	WIN = 'WIN',
+	LOSE = 'LOSE'
 }
