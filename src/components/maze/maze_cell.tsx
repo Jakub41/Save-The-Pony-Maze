@@ -47,32 +47,90 @@ const renderBorderConnections = (borderConnections: number) => {
 	);
 };
 
-// const renderRainbow = (rainbowType: RainbowType) => {
-// 	switch (rainbowType) {
-// 		case RainbowType.WEST: {
-// 			return <div className="rainbow_image_plain" />;
-// 		}
-// 		case RainbowType.NORTH: {
-// 		}
-// 		case RainbowType.NORTH_TO_EAST: {
-// 		}
-// 		case RainbowType.EAST_TO_SOUTH: {
-// 		}
-// 		case RainbowType.SOUTH_TO_WEST: {
-// 		}
-// 		case RainbowType.WEST_TO_NORTH: {
-// 		}
-// 		case RainbowType.NONE: {
-// 			return null;
-// 		}
-// 	}
-// };
+const renderRainbow = (rainbowType: RainbowType) => {
+	switch (rainbowType) {
+		case RainbowType.WEST_RED_TO_TOP: {
+			return (
+				<div
+					className="rainbow_image_plain"
+					style={{ transform: 'scaleX(0.45) scaleY(0.3)', left: '-60%' }}
+				/>
+			);
+		}
+		case RainbowType.WEST_RED_TO_BOTTOM: {
+			return (
+				<div
+					className="rainbow_image_plain"
+					style={{ transform: 'scaleX(0.45) scaleY(-0.3)', left: '-60%' }}
+				/>
+			);
+		}
+		case RainbowType.NORTH_RED_TO_LEFT: {
+			return (
+				<div
+					className="rainbow_image_plain"
+					style={{ transform: 'rotate(90deg) scaleX(0.5) scaleY(-0.3)', top: '0' }}
+				/>
+			);
+		}
+		case RainbowType.NORTH_RED_TO_RIHGT: {
+			return (
+				<div
+					className="rainbow_image_plain"
+					style={{ transform: 'rotate(90deg) scaleX(0.5) scaleY(0.3)', top: '0' }}
+				/>
+			);
+		}
+		case RainbowType.NORTH_TO_EAST: {
+			return (
+				<div
+					className="rainbow_image_connection"
+					style={{ transform: 'scale(0.277)', left: '-95%' }}
+				/>
+			);
+		}
+		case RainbowType.EAST_TO_SOUTH: {
+			return (
+				<div
+					className="rainbow_image_connection"
+					style={{ transform: 'rotate(90deg) scale(0.277)', left: '-162%' }}
+				/>
+			);
+		}
+		case RainbowType.SOUTH_TO_WEST: {
+			return (
+				<div
+					className="rainbow_image_connection"
+					style={{ transform: 'rotate(180deg) scale(0.277)', top: '-166%', left: '-160%' }}
+				/>
+			);
+		}
+		case RainbowType.WEST_TO_NORTH: {
+			return (
+				<div
+					className="rainbow_image_connection"
+					style={{ transform: 'rotate(270deg) scale(0.277)', top: '-166%', left: '-95%' }}
+				/>
+			);
+		}
+		case RainbowType.NONE: {
+			return null;
+		}
+	}
+};
 
-export default function MazeCell({ sides, borderConnections, ponyName, role = Role.NONE }: Props) {
+export default function MazeCell({
+	sides,
+	rainbowType,
+	borderConnections,
+	ponyName,
+	role = Role.NONE
+}: Props) {
 	return (
 		<div className="cell">
 			{renderBorders(sides)}
 			{renderBorderConnections(borderConnections)}
+			{renderRainbow(rainbowType)}
 			<CellRole ponyName={ponyName} role={role} />
 		</div>
 	);
