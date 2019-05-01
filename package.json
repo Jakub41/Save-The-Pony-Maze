@@ -2,6 +2,7 @@
   "name": "save-the-pony-maze",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jakub41.github.io/Save-The-Pony-Maze",
   "dependencies": {
     "@types/classnames": "^2.2.7",
     "@types/immutable": "^3.8.7",
@@ -9,6 +10,7 @@
     "@types/redux-thunk": "^2.1.0",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "gh-pages": "^2.0.1",
     "immutable": "^4.0.0-rc.12",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
@@ -24,7 +26,9 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
