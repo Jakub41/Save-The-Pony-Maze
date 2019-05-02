@@ -16,8 +16,11 @@ import Music from './components/music/music';
 import * as Routes from './constants/routes.json';
 
 import './App.css';
+import * as ReactDOM from 'react-dom';
 
 export const ponyAPI: PonyAPI = ChallengePonyAPI;
+
+ReactDOM.render(<Router basename={process.env.PUBLIC_URL}>< App /></Router>, document.getElementById('root'));
 
 const store = newStore();
 
